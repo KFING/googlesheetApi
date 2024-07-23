@@ -1,6 +1,5 @@
 from datetime import datetime
 from typing import NamedTuple, Dict, Any, Set, List, Optional
-from pytubefix import Chapter
 
 
 class FeedRecInfo(NamedTuple):
@@ -10,9 +9,9 @@ class FeedRecInfo(NamedTuple):
     postDt: datetime
     metaInfo: List[str]
     captions: str
-    timeline: List[Chapter]
-    Audio_link: str
-    Video_link: str
+    timeline: List[Any]
+    audio_link: str
+    video_link: str
 
     def to_dict(self) -> Dict[str, Any]:
         dct = self._asdict()

@@ -97,6 +97,6 @@ def youtube_scrap_main(dct: Dict[str, Any]) -> FeedRecInfo:
         metaInfo=get_metaInfo(yt=yt),
         captions=get_captions(yt=yt, lang=dct['lang']),
         timeline=get_timeline(yt=yt),
-        Audio_link=dct['url'].split("=")[-1],
-        Video_link=dct['url'].split("=")[-1],
+        audio_link=dct['url'].split("=")[-1],
+        video_link=dct['url'].split("=")[-1],
     )

@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8bec4516-9bde-4371-99f8-0ba216b46c40" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/feed_rec_info.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/googlesheet/googleuogradeFile.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scrapers/instargam_scrap.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scrapers/telegram_scrap.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scrapers/youtube_scrap.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/googlesheetApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/googlesheet/googlesheetApi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/googleuogradeFile.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/quickstart.py" beforeDir="false" afterPath="$PROJECT_DIR$/googlesheet/quickstart.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yoputube_audio.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feed_rec_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/feed_rec_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers.youtube_scrap.log" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers.youtube_scrap.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/instargam_scrap.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/instargam_scrap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/youtube_scrap.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/youtube_scrap.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +42,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.api youtubefile.executor": "Run",
+    "Python.instargam_scrap.executor": "Run",
     "Python.main.executor": "Run",
     "Python.testApi.executor": "Run",
     "Python.youtubeDown_pytube.executor": "Run",
@@ -71,6 +67,29 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
+    <configuration name="instargam_scrap" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="apiGoogleSheet" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scrapers" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scrapers/instargam_scrap.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="apiGoogleSheet" />
       <option name="ENV_FILES" value="" />
@@ -86,29 +105,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="testApi" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="apiGoogleSheet" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/testApi.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -189,10 +185,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.instargam_scrap" />
         <item itemvalue="Python.youtube_scrap (1)" />
         <item itemvalue="Python.youtube_scrap" />
         <item itemvalue="Python.youtubeDown_pytube" />
-        <item itemvalue="Python.testApi" />
       </list>
     </recent_temporary>
   </component>
@@ -213,7 +209,7 @@
       <option name="presentableId" value="Default" />
       <updated>1721649833475</updated>
       <workItem from="1721649834822" duration="11941000" />
-      <workItem from="1721726460601" duration="16321000" />
+      <workItem from="1721726460601" duration="20253000" />
     </task>
     <servers />
   </component>
@@ -221,8 +217,9 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/apiGoogleSheet$instargam_scrap.coverage" NAME="instargam_scrap Coverage Results" MODIFIED="1721757473069" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scrapers" />
     <SUITE FILE_PATH="coverage/apiGoogleSheet$testApi.coverage" NAME="testApi Coverage Results" MODIFIED="1721654234138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/apiGoogleSheet$main.coverage" NAME="main Coverage Results" MODIFIED="1721751230095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/apiGoogleSheet$main.coverage" NAME="main Coverage Results" MODIFIED="1721751769683" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/apiGoogleSheet$youtubeDown_pytube.coverage" NAME="youtubeDown_pytube Coverage Results" MODIFIED="1721662863331" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/apiGoogleSheet$youtube_scrap__1_.coverage" NAME="youtube_scrap (1) Coverage Results" MODIFIED="1721745916176" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scrapers" />
     <SUITE FILE_PATH="coverage/apiGoogleSheet$yoputube_audio.coverage" NAME="yoputube_audio Coverage Results" MODIFIED="1721665805686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

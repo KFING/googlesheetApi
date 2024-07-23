@@ -27,12 +27,16 @@ def save_to_disk(info: FeedRecInfo, article_id: str) -> None:
 
 
 def main() -> None:
-
-    dct1 = {'lang': 'a.ru', 'url': 'https://www.youtube.com/watch?v=M_vDEmq3i78', 'abr': '160kpbs', 'res': '360p'}
-    dct = {'lang': 'en', 'url': 'https://www.youtube.com/watch?v=aLPk8yRq9_c', 'abr': '160kpbs', 'res': '360p'}
-    feed_rec_info = youtube_scrap_main(dct=dct)
-    save_to_disk(info=feed_rec_info, article_id=feed_rec_info.url.split('=')[-1])
-    print(feed_rec_info)
+    message_user = input("input res: ")
+    match message_user:
+        case 'youtube':
+            dct1 = {'lang': 'a.ru', 'url': 'https://www.youtube.com/watch?v=M_vDEmq3i78', 'abr': '160kpbs', 'res': '360p'}
+            dct = {'lang': 'en', 'url': 'https://www.youtube.com/watch?v=aLPk8yRq9_c', 'abr': '160kpbs', 'res': '360p'}
+            feed_rec_info = youtube_scrap_main(dct=dct)
+            save_to_disk(info=feed_rec_info, article_id=feed_rec_info.url.split('=')[-1])
+            print(feed_rec_info)
+        case _:
+            print('hello')
 
 
 if __name__ == '__main__':
