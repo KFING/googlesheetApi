@@ -4,6 +4,7 @@ import os
 import logging
 from scrapers.youtube_scrap import youtube_scrap_main
 from scrapers.instagram_scrap import instagram_scrap_main
+from scrapers.telegram_scrap import telegram_scrap_main
 from feed_rec_info import FeedRecInfo
 from datetime import datetime
 from typing import NamedTuple, Dict, Any, Set, List, Optional
@@ -53,8 +54,13 @@ def main() -> None:
                 # image: https://www.instagram.com/p/B0QTtXKi3u_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==
                 feed_rec_info = instagram_scrap_main(dct=dct)
                 article_id = feed_rec_info.url.split('/')[-2]
+            case 'telegram':
+                dct = {'lang': 'en', 'url': 'https://t.me/masterbinarylog/2206', 'abr': '160kpbs',
+                       'res': '360p', 'api_id': 'number', 'api_hash': 'number', 'phone': 'number'}
+                feed_rec_info = telegram_scrap_main(dct)
+                article_id = feed_rec_info.url.split('/')[-1]
             case _:
-                print('telegram')
+                print('hi')
         save_to_disk(info=feed_rec_info, article_id=article_id)
     except Exception as e:
         DownloadError('wrong content', e)
