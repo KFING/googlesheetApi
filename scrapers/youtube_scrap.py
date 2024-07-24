@@ -32,6 +32,12 @@ class VideoError(Exception):
         self.message = message
 
 
+class ContentError(Exception):
+    def __init__(self, message: str, exception: Exception) -> None:
+        self.exception = exception
+        self.message = message
+
+
 class CaptionError(Exception):
     def __init__(self, message: str, exception: Exception) -> None:
         self.exception = exception
@@ -82,21 +88,23 @@ def get_timeline(yt: YouTube) -> List[pytubefix.Chapter]:
 
 
 def youtube_scrap_main(dct: Dict[str, Any]) -> FeedRecInfo:
-    py_logger.info("start")
-    link = "https://www.youtube.com/watch?v=M_vDEmq3i78"
-    yt = YouTube(dct['url'])
-    get_audio(yt=yt, abr=dct['abr'], id_video=dct['url'].split("=")[-1])
-    py_logger.info("audio success")
-    get_video(yt=yt, res=dct['res'], id_video=dct['url'].split("=")[-1])
-    py_logger.info("video success")
-    return FeedRecInfo(
-        description=get_description(yt=yt),
-        title=get_title(yt=yt),
-        url=dct['url'],
-        postDt=get_postDt(yt=yt),
-        metaInfo=get_metaInfo(yt=yt),
-        captions=get_captions(yt=yt, lang=dct['lang']),
-        timeline=get_timeline(yt=yt),
-        audio_link=dct['url'].split("=")[-1],
-        video_link=dct['url'].split("=")[-1],
-    )
+    try:
+        py_logger.info("start")
+        yt = YouTube(dct['url'])
+        get_audio(yt=yt, abr=dct['abr'], id_video=dct['url'].split("=")[-1])
+        py_logger.info("audio success")
+        get_video(yt=yt, res=dct['res'], id_video=dct['url'].split("=")[-1])
+        py_logger.info("video success")
+        return FeedRecInfo(
+            description=get_description(yt=yt),
+            title=get_title(yt=yt),
+            url=dct['url'],
+            postDt=get_postDt(yt=yt),
+            metaInfo=get_metaInfo(yt=yt),
+            captions=get_captions(yt=yt, lang=dct['lang']),
+            timeline=get_timeline(yt=yt),
+            audio_link=dct['url'].split("=")[-1],
+            video_link=dct['url'].split("=")[-1],
+        )
+    except Exception as e:
+        ContentError('wrong youtube content', e)

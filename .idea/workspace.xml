@@ -5,11 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8bec4516-9bde-4371-99f8-0ba216b46c40" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/scrapers/instagram_scrap.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feed_rec_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/feed_rec_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__main__.log" beforeDir="false" afterPath="$PROJECT_DIR$/__main__.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/aLPk8yRq9_c/aLPk8yRq9_c.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/data/aLPk8yRq9_c/aLPk8yRq9_c.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/aLPk8yRq9_c/aLPk8yRq9_c.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/data/aLPk8yRq9_c/aLPk8yRq9_c.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/googlesheet/googleuogradeFile.py" beforeDir="false" afterPath="$PROJECT_DIR$/googlesheet/googleuogradeFile.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scrapers.youtube_scrap.log" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers.youtube_scrap.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/instargam_scrap.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/instargam_scrap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/__main__.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/egor_meschenko/2019-07-23_09-48-48_UTC.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/egor_meschenko/2019-07-23_09-48-48_UTC.json.xz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/egor_meschenko/2021-06-13_09-04-15_UTC.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/egor_meschenko/2021-06-13_09-04-15_UTC.json.xz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/egor_meschenko/2021-06-13_09-04-15_UTC.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/instargam_scrap.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC.json.xz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC_1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC_2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC_3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC_4.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/scrapers/youtube_scrap.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/youtube_scrap.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,26 +55,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.api youtubefile.executor": "Run",
-    "Python.instargam_scrap.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.testApi.executor": "Run",
-    "Python.youtubeDown_pytube.executor": "Run",
-    "Python.youtube_audio.executor": "Run",
-    "Python.youtube_scrap (1).executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.fileTypes",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.api youtubefile.executor&quot;: &quot;Run&quot;,
+    &quot;Python.instargam_scrap.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.testApi.executor&quot;: &quot;Run&quot;,
+    &quot;Python.youtubeDown_pytube.executor&quot;: &quot;Run&quot;,
+    &quot;Python.youtube_audio.executor&quot;: &quot;Run&quot;,
+    &quot;Python.youtube_scrap (1).executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\meshh\PycharmProjects\apiGoogleSheet\googlesheet" />
@@ -67,7 +83,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
-    <configuration name="instargam_scrap" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="instagram_scrap" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="apiGoogleSheet" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -81,7 +97,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scrapers/instargam_scrap.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\meshh\PycharmProjects\apiGoogleSheet\scrapers\instagram_scrap.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -185,7 +201,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.instargam_scrap" />
+        <item itemvalue="Python.instagram_scrap" />
         <item itemvalue="Python.youtube_scrap (1)" />
         <item itemvalue="Python.youtube_scrap" />
         <item itemvalue="Python.youtubeDown_pytube" />
@@ -209,7 +225,10 @@
       <option name="presentableId" value="Default" />
       <updated>1721649833475</updated>
       <workItem from="1721649834822" duration="11941000" />
-      <workItem from="1721726460601" duration="20253000" />
+      <workItem from="1721726460601" duration="20303000" />
+      <workItem from="1721810710343" duration="4515000" />
+      <workItem from="1721816514465" duration="13000" />
+      <workItem from="1721816604175" duration="1772000" />
     </task>
     <servers />
   </component>
@@ -217,9 +236,9 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/apiGoogleSheet$instargam_scrap.coverage" NAME="instargam_scrap Coverage Results" MODIFIED="1721757473069" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scrapers" />
+    <SUITE FILE_PATH="coverage/apiGoogleSheet$instargam_scrap.coverage" NAME="instargam_scrap Coverage Results" MODIFIED="1721814489094" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scrapers" />
     <SUITE FILE_PATH="coverage/apiGoogleSheet$testApi.coverage" NAME="testApi Coverage Results" MODIFIED="1721654234138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/apiGoogleSheet$main.coverage" NAME="main Coverage Results" MODIFIED="1721751769683" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/apiGoogleSheet$main.coverage" NAME="main Coverage Results" MODIFIED="1721817665371" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/apiGoogleSheet$youtubeDown_pytube.coverage" NAME="youtubeDown_pytube Coverage Results" MODIFIED="1721662863331" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/apiGoogleSheet$youtube_scrap__1_.coverage" NAME="youtube_scrap (1) Coverage Results" MODIFIED="1721745916176" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scrapers" />
     <SUITE FILE_PATH="coverage/apiGoogleSheet$yoputube_audio.coverage" NAME="yoputube_audio Coverage Results" MODIFIED="1721665805686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
