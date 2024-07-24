@@ -5,28 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8bec4516-9bde-4371-99f8-0ba216b46c40" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/scrapers/instagram_scrap.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__main__.log" beforeDir="false" afterPath="$PROJECT_DIR$/__main__.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/aLPk8yRq9_c/aLPk8yRq9_c.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/data/aLPk8yRq9_c/aLPk8yRq9_c.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/aLPk8yRq9_c/aLPk8yRq9_c.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/data/aLPk8yRq9_c/aLPk8yRq9_c.mp4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/googlesheet/googleuogradeFile.py" beforeDir="false" afterPath="$PROJECT_DIR$/googlesheet/googleuogradeFile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers.youtube_scrap.log" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers.youtube_scrap.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/__main__.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/egor_meschenko/2019-07-23_09-48-48_UTC.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/egor_meschenko/2019-07-23_09-48-48_UTC.json.xz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/egor_meschenko/2021-06-13_09-04-15_UTC.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/egor_meschenko/2021-06-13_09-04-15_UTC.json.xz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/egor_meschenko/2021-06-13_09-04-15_UTC.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/instargam_scrap.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC.json.xz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC_1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC_2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC_3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/msigaming/2024-06-07_06-00-25_UTC_4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scrapers/youtube_scrap.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/youtube_scrap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/instagram_scrap.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/instagram_scrap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/telegram_scrap.py" beforeDir="false" afterPath="$PROJECT_DIR$/scrapers/telegram_scrap.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,7 +209,7 @@
       <workItem from="1721726460601" duration="20303000" />
       <workItem from="1721810710343" duration="4515000" />
       <workItem from="1721816514465" duration="13000" />
-      <workItem from="1721816604175" duration="1772000" />
+      <workItem from="1721816604175" duration="6086000" />
     </task>
     <servers />
   </component>

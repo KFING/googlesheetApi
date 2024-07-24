@@ -1,6 +1,7 @@
 import os
 import logging
 import re
+import asyncio
 from instaloader import Instaloader, Post
 from datetime import datetime
 from typing import NamedTuple, Dict, Any, Set, List, Optional
@@ -35,7 +36,6 @@ def is_instagram_post_url(url):
         return 'Instagram Post'
     else:
         return 'Unknown'
-
 
 def get_video(L: Instaloader, post: Post, post_id: str):
     try:
