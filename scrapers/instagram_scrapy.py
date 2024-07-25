@@ -70,7 +70,7 @@ def get_date(post: Post):
     return post.date
 
 
-def instagram_scrapy_main(dct: Dict[str, Any]):
+def instagram_scrapy_post(dct: Dict[str, Any]):
     try:
         py_logger.info("start")
         L = Instaloader()
@@ -92,3 +92,5 @@ def instagram_scrapy_main(dct: Dict[str, Any]):
         )
     except Exception as e:
         ContentError('wrong instagram content', e)
+
+

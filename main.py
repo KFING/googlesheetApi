@@ -29,43 +29,35 @@ class DownloadError(Exception):
         self.message = message
 
 
-def save_to_disk(info: FeedRecInfo, feed_id: str, channel_id: str) -> None:
-    os.makedirs(os.path.join(RESULTS_DIR, feed_id, channel_id), exist_ok=True)
-    with open(os.path.join(RESULTS_DIR, feed_id, channel_id, f'json{feed_id}.json'), "wb") as file:
+def save_to_disk(info: FeedRecInfo) -> None:
+    os.makedirs(os.path.join(RESULTS_DIR, info.id_feed, info.id_channel), exist_ok=True)
+    with open(os.path.join(RESULTS_DIR, info.id_feed, info.id_channel, f'json{info.id_feed}.json'), "wb") as file:
         file.write(json.dumps(info.to_dict()).encode('UTF-8'))
 
 
 def main() -> None:
-    try:
-        py_logger.info("start")
-        message_user = input("input res: ")
-        feed_rec_list = []
-        match message_user:
-            case 'youtube':
-                py_logger.info("youtube content")
-                dct = {'lang': 'en', 'url': 'https://www.youtube.com/@Hohmemes', 'abr': 'low', 'res': 'low'}
-                feed_rec_list = main_youtube_scraper(dct=dct)
-                py_logger.info("youtube content success")
-            case 'instagram':
-                py_logger.info("instagram content")
-                dct = {'lang': 'en', 'url': 'https://www.youtube.com/watch?v=aLPk8yRq9_c', 'abr': 'low', 'res': 'low'}
-                feed_rec_info = instagram_scrapy_main(dct=dct)
-                feed_id = feed_rec_info.url.split('/')[-2]
-            case 'telegram':
-                dct = {'lang': 'en', 'url': 'https://t.me/masterbinarylog/2206', 'abr': '160kpbs',
-                       'res': '360p', 'api_id': API_ID, 'api_hash': API_HASH, 'phone': PHONE}
-                feed_rec_info = telegram_scrapy_main(dct)
-                feed_id = feed_rec_info.url.split('/')[-1]
-            case _:
-                print('hi')
-        for feed_rec_info in feed_rec_list:
-            save_to_disk(
-                info=feed_rec_info,
-                feed_id=feed_rec_info.id_feed,
-                channel_id=feed_rec_info.id_channel
-            )
-    except Exception as e:
-        DownloadError('wrong content', e)
+    py_logger.info("start")
+    message_user = input("input res: ")
+    feed_rec_list = []
+    match message_user:
+        case 'youtube':
+            py_logger.info("youtube content")
+            dct = {'lang': 'en', 'url': 'https://youtube.com/playlist?list=PLVt7fiIBvDPFdtu-_7Mm-eVgT6sLxVKDj&si=PYZ50OlyR31CfzKd', 'abr': 'low', 'res': 'low'}
+            feed_rec_list = main_youtube_scraper(dct=dct)
+            py_logger.info("youtube content success")
+        case 'instagram':
+            py_logger.info("instagram content")
+            dct = {'lang': 'en', 'url': 'https://www.youtube.com/watch?v=aLPk8yRq9_c', 'abr': 'low', 'res': 'low'}
+            feed_rec_list = instagram_scrapy_main(dct=dct)
+            py_logger.info("youtube content success")
+        case 'telegram':
+            dct = {'lang': 'en', 'url': 'https://t.me/masterbinarylog/2206', 'abr': '160kpbs',
+                   'res': '360p', 'api_id': API_ID, 'api_hash': API_HASH, 'phone': PHONE}
+            feed_rec_info = telegram_scrapy_main(dct)
+        case _:
+            print('hi')
+    for feed_rec_info in feed_rec_list:
+        save_to_disk(info=feed_rec_info)
 
 
 if __name__ == '__main__':
