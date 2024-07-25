@@ -70,7 +70,7 @@ def get_date(post: Post):
     return post.date
 
 
-def instagram_scrap_main(dct: Dict[str, Any]):
+def instagram_scrapy_main(dct: Dict[str, Any]):
     try:
         py_logger.info("start")
         L = Instaloader()

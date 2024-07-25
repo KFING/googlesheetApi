@@ -59,7 +59,7 @@ async def main(client: TelegramClient, phone: str, post_link: str) -> tuple[Any,
         py_logger.warning('Message not found')
 
 
-def telegram_scrap_main(dct: Dict[str, Any]):
+def telegram_scrapy_main(dct: Dict[str, Any]):
     py_logger.info("start")
     try:
         client = TelegramClient('session_name', dct['api_id'], dct['api_hash'])
@@ -79,5 +79,3 @@ def telegram_scrap_main(dct: Dict[str, Any]):
         )
     except Exception as e:
         ContentError('wrong telegram content', e)
-
-

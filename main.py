@@ -2,9 +2,10 @@ import json
 import lzma
 import os
 import logging
-from scrapers.youtube_scrap import youtube_scrap_main
-from scrapers.instagram_scrap import instagram_scrap_main
-from scrapers.telegram_scrap import telegram_scrap_main
+from scrapers.youtube_scrapy import main_youtube_scraper
+from scrapers.instagram_scrapy import instagram_scrapy_main
+from scrapers.telegram_scrapy import telegram_scrapy_main
+from config import API_ID, API_HASH, PHONE
 from feed_rec_info import FeedRecInfo
 from datetime import datetime
 from typing import NamedTuple, Dict, Any, Set, List, Optional
@@ -28,48 +29,44 @@ class DownloadError(Exception):
         self.message = message
 
 
-def save_to_disk(info: FeedRecInfo, article_id: str) -> None:
-    os.makedirs(os.path.join(RESULTS_DIR, article_id), exist_ok=True)
-    with open(os.path.join(RESULTS_DIR, article_id, f'json{article_id}.json'), "wb") as file:
+def save_to_disk(info: FeedRecInfo, feed_id: str, channel_id: str) -> None:
+    os.makedirs(os.path.join(RESULTS_DIR, feed_id, channel_id), exist_ok=True)
+    with open(os.path.join(RESULTS_DIR, feed_id, channel_id, f'json{feed_id}.json'), "wb") as file:
         file.write(json.dumps(info.to_dict()).encode('UTF-8'))
 
 
 def main() -> None:
-    py_logger.info("start")
     try:
+        py_logger.info("start")
         message_user = input("input res: ")
+        feed_rec_list = []
         match message_user:
             case 'youtube':
                 py_logger.info("youtube content")
-                dct = {'lang': 'en', 'url': 'https://www.youtube.com/watch?v=aLPk8yRq9_c', 'abr': '160kpbs', 'res': '360p'}
-                #video1: https://www.youtube.com/watch?v=M_vDEmq3i78
-                #video2: https://www.youtube.com/watch?v=aLPk8yRq9_c
-                feed_rec_info = youtube_scrap_main(dct=dct)
-                article_id=feed_rec_info.url.split('=')[-1]
+                dct = {'lang': 'en', 'url': 'https://www.youtube.com/@Hohmemes', 'abr': 'low', 'res': 'low'}
+                feed_rec_list = main_youtube_scraper(dct=dct)
+                py_logger.info("youtube content success")
             case 'instagram':
                 py_logger.info("instagram content")
-                dct = {'lang': 'en', 'url': 'https://www.youtube.com/watch?v=aLPk8yRq9_c', 'abr': '160kpbs', 'res': '360p'}
-                # video post: https://www.instagram.com/reel/C9cdQhBsvay/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==
-                # imageS post: https://www.instagram.com/p/C9jhuXlKEN9/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==
-                # image: https://www.instagram.com/p/B0QTtXKi3u_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==
-                feed_rec_info = instagram_scrap_main(dct=dct)
-                article_id = feed_rec_info.url.split('/')[-2]
+                dct = {'lang': 'en', 'url': 'https://www.youtube.com/watch?v=aLPk8yRq9_c', 'abr': 'low', 'res': 'low'}
+                feed_rec_info = instagram_scrapy_main(dct=dct)
+                feed_id = feed_rec_info.url.split('/')[-2]
             case 'telegram':
                 dct = {'lang': 'en', 'url': 'https://t.me/masterbinarylog/2206', 'abr': '160kpbs',
-                       'res': '360p', 'api_id': 'number', 'api_hash': 'number', 'phone': 'number'}
-                feed_rec_info = telegram_scrap_main(dct)
-                article_id = feed_rec_info.url.split('/')[-1]
+                       'res': '360p', 'api_id': API_ID, 'api_hash': API_HASH, 'phone': PHONE}
+                feed_rec_info = telegram_scrapy_main(dct)
+                feed_id = feed_rec_info.url.split('/')[-1]
             case _:
                 print('hi')
-        save_to_disk(info=feed_rec_info, article_id=article_id)
+        for feed_rec_info in feed_rec_list:
+            save_to_disk(
+                info=feed_rec_info,
+                feed_id=feed_rec_info.id_feed,
+                channel_id=feed_rec_info.id_channel
+            )
     except Exception as e:
         DownloadError('wrong content', e)
 
 
 if __name__ == '__main__':
     main()
-
-
-#пробелма с сериализатором в timeline и metadata, я не могу сериализовать для json эти данные и поэтому временно решил использовать превращение в строку
-#есть проблема с кодировкой
-#спросить про гитигнор

@@ -1,0 +1,10 @@
+scrapers.youtube_scrapy 2024-07-25 18:58:16,406 INFO start
+scrapers.youtube_scrapy 2024-07-25 18:58:16,406 INFO getting links
+scrapers.youtube_scrapy 2024-07-25 18:58:16,796 INFO parsing video:<pytubefix.__main__.YouTube object: videoId=Al0fwWuuQWI>
+scrapers.youtube_scrapy 2024-07-25 18:58:16,796 INFO start
+scrapers.youtube_scrapy 2024-07-25 18:58:17,694 INFO audio success
+scrapers.youtube_scrapy 2024-07-25 18:58:18,254 INFO video success
+scrapers.youtube_scrapy 2024-07-25 18:58:29,082 INFO parsing video:<pytubefix.__main__.YouTube object: videoId=BYySnmGlHEM>
+scrapers.youtube_scrapy 2024-07-25 18:58:29,082 INFO start
+scrapers.youtube_scrapy 2024-07-25 18:58:30,088 INFO audio success
+scrapers.youtube_scrapy 2024-07-25 18:58:30,685 INFO video success

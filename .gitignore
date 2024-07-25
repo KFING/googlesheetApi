@@ -1,3 +1,10 @@
 \venv
-\wsws.json
-\credentials.json
+wsws.json
+credentials.json
+config.py
+.log
+
+.idea
+*.iws
+*.iml
+*.ipr
