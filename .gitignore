@@ -1,5 +1,5 @@
 .idea
 config.py
 .venv
-.log
+*.log
 \data
