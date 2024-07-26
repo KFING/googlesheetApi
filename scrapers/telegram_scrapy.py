@@ -1,3 +1,4 @@
+import asyncio
 import os
 import logging
 import re
@@ -10,7 +11,7 @@ from telethon.tl.types import PeerChannel
 
 
 CWD = os.getcwd()
-RESULTS_DIR = os.path.join(CWD, 'data')
+RESULTS_DIR = os.path.join(CWD, 'data', 'telegram')
 
 
 py_logger = logging.getLogger(f"{__name__}")
@@ -64,7 +65,7 @@ def telegram_scrapy_main(dct: Dict[str, Any]):
     try:
         client = TelegramClient('session_name', dct['api_id'], dct['api_hash'])
         with client:
-            content, postDt, title, mes_id = client.loop.run_until_complete(main(client, dct['phone'], dct['url']))
+            content, postDt, title, mes_id = asyncio.run(main(client, dct['phone'], dct['url']))
         py_logger.info("finish, all information received")
         return FeedRecInfo(
             description=content,

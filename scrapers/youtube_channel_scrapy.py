@@ -1,16 +1,20 @@
 import re
-import os
-import logging
-import pytubefix
-import time
-from pytubefix import YouTube, Channel, Playlist
-from datetime import datetime
-from typing import NamedTuple, Dict, Any, Set, List, Optional
-from feed_rec_info import FeedRecInfo
-from feed_rec_info import FeedRecInfo
-#link https://youtube.com/@hohmemes?si=zXlgflyh1yADNxlt
-url = 'https://www.youtube.com/@Hohmemes/playlists'
-c = Channel(url)
-feed_rec_list: List[FeedRecInfo] = []
-for url in c.videos:
-    print(f"parsing url:{type(url)}")
+
+def identify_instagram_input(input_str):
+    # Регулярные выражения для проверки URL поста
+    post_pattern = re.compile(r'^https?://(www\.)?instagram\.com/p/[\w-]+/?(\?[\w=&]+)?$')
+
+    if post_pattern.match(input_str):
+        return 'post'
+    elif re.match(r'^[\w-]+$', input_str):
+        return 'profile'
+    else:
+        return 'unknown'
+
+# Примеры использования
+inputs = [
+    'https://www.instagram.com/p/B0QTtXKi3u_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='
+]
+
+for input_str in inputs:
+    print(f'Input: {input_str} - Type: {identify_instagram_input(input_str)}')

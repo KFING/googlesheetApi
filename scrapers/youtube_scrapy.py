@@ -10,7 +10,7 @@ from feed_rec_info import FeedRecInfo
 
 
 CWD = os.getcwd()
-RESULTS_DIR = os.path.join(CWD, 'data')
+RESULTS_DIR = os.path.join(CWD, 'data', 'youtube')
 
 
 py_logger = logging.getLogger(f"{__name__}")
@@ -143,15 +143,9 @@ def get_timeline(yt: YouTube) -> List[pytubefix.Chapter]:
 def youtube_scrapy_video(dct: Dict[str, Any], yt: YouTube) -> FeedRecInfo:
     try:
         py_logger.info("start")
-        get_audio(
-            yt=yt,
-            abr=dct['abr']
-        )
+        get_audio(yt=yt, abr=dct['abr'])
         py_logger.info("audio success")
-        get_video(
-            yt=yt,
-            res=dct['res']
-        )
+        get_video(yt=yt, res=dct['res'])
         py_logger.info("video success")
         return FeedRecInfo(
             id_feed=yt.video_id,
