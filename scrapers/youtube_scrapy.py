@@ -148,6 +148,7 @@ def youtube_scrapy_video(dct: Dict[str, Any], yt: YouTube) -> FeedRecInfo:
         get_video(yt=yt, res=dct['res'])
         py_logger.info("video success")
         return FeedRecInfo(
+            social_media_name='youtube',
             id_feed=yt.video_id,
             id_channel=yt.channel_id,
             description=get_description(yt=yt),

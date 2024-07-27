@@ -1,20 +1,22 @@
 import re
 
-def identify_instagram_input(input_str):
-    # Регулярные выражения для проверки URL поста
-    post_pattern = re.compile(r'^https?://(www\.)?instagram\.com/p/[\w-]+/?(\?[\w=&]+)?$')
 
-    if post_pattern.match(input_str):
-        return 'post'
-    elif re.match(r'^[\w-]+$', input_str):
-        return 'profile'
+def extract_nickname(input_string):
+    pattern = r"(?:https:\/\/www\.instagram\.com\/)?([^\/?]+)"
+    match = re.search(pattern, input_string)
+
+    if match:
+        return match.group(1)
     else:
-        return 'unknown'
+        return None
 
-# Примеры использования
+
+# Примеры входных данных
 inputs = [
-    'https://www.instagram.com/p/B0QTtXKi3u_/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=='
+    "https://www.instagram.com/b3r3zko?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    "b3r3zko"
 ]
 
 for input_str in inputs:
-    print(f'Input: {input_str} - Type: {identify_instagram_input(input_str)}')
+    nickname = extract_nickname(input_str)
+    print(f"Input: {input_str} -> Nickname: {nickname}")

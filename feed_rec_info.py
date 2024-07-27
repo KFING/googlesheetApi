@@ -3,6 +3,7 @@ from typing import NamedTuple, Dict, Any, Set, List, Optional
 
 
 class FeedRecInfo(NamedTuple):
+    social_media_name: str
     id_feed: str
     id_channel: str
     description: str

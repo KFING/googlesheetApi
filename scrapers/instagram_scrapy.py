@@ -2,6 +2,7 @@ import os
 import logging
 import re
 import asyncio
+import time
 from instaloader import Instaloader, Post, Profile
 from datetime import datetime
 from typing import NamedTuple, Dict, Any, Set, List, Optional
@@ -31,9 +32,9 @@ class VideoError(Exception):
         self.message = message
 
 
-def download_video(L: Instaloader, filename, url: str, date: datetime) -> None:
+def download_video(L: Instaloader, filename, url: str, date: datetime, i:int) -> None:
     os.makedirs(filename, exist_ok=True)
-    L.download_pic(filename=filename, url=url, mtime=date)
+    L.download_pic(filename=os.path.join(filename, str(i)), url=url, mtime=date)
 
 
 def get_insta_media(L: Instaloader, post: Post) -> None:
@@ -42,18 +43,18 @@ def get_insta_media(L: Instaloader, post: Post) -> None:
         if post.typename == 'GraphSidecar':
             for node in post.get_sidecar_nodes():
                 if node.is_video:
-                    download_video(L, filename=os.path.join(RESULTS_DIR, get_id_channel(post), get_id_post(post), str(i)),
-                                   url=node.video_url, date=post.date_utc)
+                    download_video(L, filename=os.path.join(RESULTS_DIR, get_id_channel(post), get_id_post(post)),
+                                   url=node.video_url, date=post.date_utc, i=i)
                 else:
-                    download_video(L, filename=os.path.join(RESULTS_DIR, get_id_channel(post), get_id_post(post), str(i)),
-                                   url=node.display_url, date=post.date_utc)
+                    download_video(L, filename=os.path.join(RESULTS_DIR, get_id_channel(post), get_id_post(post)),
+                                   url=node.display_url, date=post.date_utc, i=i)
                 i += 1
         elif post.is_video:
-            download_video(L, filename=os.path.join(RESULTS_DIR, get_id_channel(post), get_id_post(post), str(i)),
-                           url=post.video_url, date=post.date_utc)
+            download_video(L, filename=os.path.join(RESULTS_DIR, get_id_channel(post), get_id_post(post)),
+                           url=post.video_url, date=post.date_utc, i=i)
         else:
-            download_video(L, filename=os.path.join(RESULTS_DIR, get_id_channel(post), get_id_post(post), str(i)), url=post.url,
-                           date=post.date_utc)
+            download_video(L, filename=os.path.join(RESULTS_DIR, get_id_channel(post), get_id_post(post)), url=post.url,
+                           date=post.date_utc, i=i)
     except Exception as e:
         VideoError('wrong video content', e)
 
@@ -89,9 +90,10 @@ def instagram_scrapy_post(L: Instaloader, post: Post) -> FeedRecInfo:
         get_insta_media(L=L, post=post)
         py_logger.info("video success")
         return FeedRecInfo(
-            description=get_description(post),
+            social_media_name='instagram',
             id_feed=get_id_post(post),
             id_channel=get_id_channel(post),
+            description=get_description(post),
             title=get_title(post),
             url=get_url(post),
             post_date=get_date(post),
@@ -109,15 +111,11 @@ def instagram_scrapy_profile(L: Instaloader, dct: Dict[str, Any]) -> List[FeedRe
     py_logger.info("start")
     try:
         py_logger.info("start")
-
         feed_rec_list: List[FeedRecInfo] = []
-        try:
-            L.login(dct['insta_username'], dct['insta_password'])
-        except TwoFactorAuthRequiredException as e:
-            L.two_factor_login(input('code for insta: '))
-        for post in Profile.from_username(L.context, dct['url']).get_posts():
+        for post in Profile.from_username(L.context, re.search(r"(?:https:\/\/www\.instagram\.com\/)?([^\/?]+)", dct['url']).group(1)).get_posts():
             py_logger.info(f"get post{post.shortcode}")
             feed_rec_list.append(instagram_scrapy_post(L, post))
+            time.sleep(10)
         py_logger.info("profile success")
         return feed_rec_list
     except Exception as e:
@@ -126,10 +124,14 @@ def instagram_scrapy_profile(L: Instaloader, dct: Dict[str, Any]) -> List[FeedRe
 
 def main_instagram_scrapy(dct: Dict[str, Any]) -> List[FeedRecInfo]:
     post_pattern = re.compile(r'^https?://(www\.)?instagram\.com/p/[\w-]+/?(\?[\w=&]+)?$')
+    L = Instaloader()
+    try:
+        L.login(dct['insta_username'], dct['insta_password'])
+    except TwoFactorAuthRequiredException as e:
+        L.two_factor_login(input('code for insta: '))
     if post_pattern.match(dct['url']):
-        return instagram_scrapy_profile(Instaloader(), dct)
+        return [instagram_scrapy_post(L, Post.from_shortcode(Instaloader().context, dct['url'].split("/")[-2]))]
     elif re.match(r'^[\w-]+$', dct['url']):
-        return [
-            instagram_scrapy_post(Instaloader(), Post.from_shortcode(Instaloader().context, dct['url'].split("/")[-2]))]
+        return instagram_scrapy_profile(L, dct)
     else:
         return 'unknown'  #я не знаю что тут передавать
