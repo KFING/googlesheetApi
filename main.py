@@ -4,7 +4,7 @@ import os
 import logging
 from scrapers.youtube_scrapy import main_youtube_scraper
 from scrapers.instagram_scrapy import main_instagram_scrapy
-from scrapers.telegram_scrapy import telegram_scrapy_main
+from scrapers.telegram_scrapy import main_telegram_scraper
 from config import API_ID, API_HASH, PHONE, INSTA_PASSWORD, INSTA_USERNAME
 from feed_rec_info import FeedRecInfo
 from datetime import datetime
@@ -48,7 +48,7 @@ def main(dct: Dict[str, Any]) -> None:
             feed_rec_list = main_instagram_scrapy(dct=dct)
             py_logger.info("instagram content success")
         case 'telegram':
-            feed_rec_info = telegram_scrapy_main(dct)
+            feed_rec_list = main_telegram_scraper(dct)
         case _:
             print('hi')
     for feed_rec_info in feed_rec_list:
@@ -57,9 +57,9 @@ def main(dct: Dict[str, Any]) -> None:
 
 if __name__ == '__main__':
     dct = {
-        'social_media':'instagram',
+        'social_media': 'telegram',
         'lang': 'en',
-        'url': 'b3r3zko',
+        'url': 'https://t.me/+HqfVmcDt3DVjYmUy',
         'abr': 'low',
         'res': 'low',
         'api_id': API_ID,

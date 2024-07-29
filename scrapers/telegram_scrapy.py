@@ -1,13 +1,13 @@
-import asyncio
 import os
 import logging
-import re
-from datetime import datetime
+import time
 from typing import NamedTuple, Dict, Any, Set, List, Optional, Tuple
 from feed_rec_info import FeedRecInfo
 from telethon import TelegramClient
-from telethon.tl.functions.messages import GetHistoryRequest
-from telethon.tl.types import PeerChannel
+from telethon.tl.functions.channels import JoinChannelRequest
+from config import API_ID, API_HASH  # получение айди и хэша нашего приложения из файла config.py
+import asyncio
+from telethon.errors.rpcerrorlist import FloodWaitError
 
 
 CWD = os.getcwd()
@@ -20,63 +20,69 @@ py_handler = logging.FileHandler(f"{__name__}.log", mode='w')
 py_formatter = logging.Formatter("%(name)s %(asctime)s %(levelname)s %(message)s")
 py_handler.setFormatter(py_formatter)
 py_logger.addHandler(py_handler)
-class ContentError(Exception):
-    def __init__(self, message: str, exception: Exception) -> None:
-        self.exception = exception
-        self.message = message
 
 
-async def main(client: TelegramClient, phone: str, post_link: str) -> tuple[Any, Any, Any, str | Any]:
-    await client.start(phone)
-    match = re.match(r'https://t.me/(c/)?([^/]+)/(\d+)', post_link)
-    if not match:
-        py_logger.warning('Incorrect link to post')
-        return
-    channel_prefix, channel_identifier, message_id = match.groups()
-    if channel_prefix:
-        channel_entity = await client.get_entity(int(channel_identifier))
-    else:
-        channel_entity = await client.get_entity(channel_identifier)
-    history = await client(GetHistoryRequest(
-        peer=channel_entity,
-        offset_id=int(message_id)+1,
-        offset_date=datetime.now(),
-        add_offset=0,
-        limit=1,
-        max_id=0,
-        min_id=0,
-        hash=0
-    ))
-    if history.messages:
-        message = history.messages[0]
-        if message.media:
-            os.makedirs(os.path.join(RESULTS_DIR, str(message_id)), exist_ok=True)
-            file_path = await client.download_media(message.media, file=os.path.join(RESULTS_DIR, str(message_id), str(message_id)))
-            py_logger.info(f'The media file is saved along the path: {file_path}')
-        else:
-            py_logger.warning('Media files are missing from the message')
-        return message.message, message.date, message.from_id, message_id
-    else:
-        py_logger.warning('Message not found')
+async def get_channel_id(client, link: str)->str:
+    m = await client.get_messages(link, limit=1)
+    channel_id = m[0].peer_id.channel_id
+    return str(channel_id)
 
 
-def telegram_scrapy_main(dct: Dict[str, Any]):
-    py_logger.info("start")
-    try:
-        client = TelegramClient('session_name', dct['api_id'], dct['api_hash'])
-        with client:
-            content, postDt, title, mes_id = asyncio.run(main(client, dct['phone'], dct['url']))
-        py_logger.info("finish, all information received")
-        return FeedRecInfo(
-            description=content,
-            title=title,
-            url=dct['url'],
-            postDt=postDt,
-            audio_link=mes_id,
-            video_link=mes_id,
-            metaInfo=None,
-            captions=None,
-            timeline=None,
-        )
-    except Exception as e:
-        ContentError('wrong telegram content', e)
+def clearify_text(message)->str:
+    text = message.message
+    text_splitted = text.split()
+    text_listed = [word for word in text_splitted if word != ' ']
+    return " ".join(text_listed)
+
+
+async def download_media(client, message, message_id:str, channel_id:str) -> None:
+    os.makedirs(os.path.join(RESULTS_DIR, channel_id, message_id), exist_ok=True)
+    await client.download_media(message=message, file=os.path.join(RESULTS_DIR, channel_id, message_id, message_id))
+
+
+def get_message_content(client, message, url:str, channel_id:str, message_id:str)->FeedRecInfo:
+    return FeedRecInfo(
+        social_media_name='telegram',
+        id_feed=message_id,
+        id_channel=channel_id,
+        description=clearify_text(message=message),
+        title=channel_id,
+        url=f'{url}/{str(message.id)}',
+        post_date=message.date,
+        meta_info=None,
+        captions=None,
+        timeline=None,
+        audio_link=None,
+        video_link=message_id,
+    )
+
+
+async def parse(client, url:str):
+    err = []
+    feed_rec_list = []
+    channel_id = await get_channel_id(client, url)
+    async for message in client.iter_messages(url, reverse=True):
+        try:
+            feed_rec_list.append(get_message_content(client, message, url, channel_id, str(message.id)))
+            time.sleep(10)
+            if message.media:
+                await download_media(client, message, str(message.id), channel_id)
+        except Exception as passing:
+            err.append(passing)
+            continue
+    return feed_rec_list
+
+
+async def main(dct: Dict[str, Any]) -> None:
+    async with TelegramClient('new', API_ID, API_HASH) as client:
+        try:
+            await client(JoinChannelRequest(dct['url']))
+            feed_rec_list = await parse(client, dct['url'])
+        except FloodWaitError as fwe:
+            await asyncio.sleep(delay=fwe.seconds)
+    return feed_rec_list
+
+
+
+def main_telegram_scraper(dct: Dict[str, Any]) -> List[FeedRecInfo]:
+    return asyncio.run(main(dct))

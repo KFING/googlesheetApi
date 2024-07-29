@@ -94,7 +94,7 @@ def get_audio(yt: YouTube, abr: str) -> None:
 
 def get_video(yt: YouTube, res: str) -> None:
     try:
-        os.makedirs(os.path.join(RESULTS_DIR, yt.video_id, yt.channel_id), exist_ok=True)
+        os.makedirs(os.path.join(RESULTS_DIR, yt.channel_id, yt.video_id), exist_ok=True)
         resolutions = sorted(
             set(stream.resolution for stream in yt.streams.filter(type='video')),
             key=lambda s: int(s.split('p')[0])
@@ -104,21 +104,21 @@ def get_video(yt: YouTube, res: str) -> None:
                 yt.streams.filter(
                     res=resolutions[0]
                 ).first().download(
-                    output_path=os.path.join(RESULTS_DIR, yt.video_id, yt.channel_id),
+                    output_path=os.path.join(RESULTS_DIR, yt.channel_id, yt.video_id),
                     filename=f"{yt.video_id}.mp4"
                 )
             case 'medium':
                 yt.streams.filter(
                     res=resolutions[len(resolutions) // 2]
                 ).first().download(
-                    output_path=os.path.join(RESULTS_DIR, yt.video_id, yt.channel_id),
+                    output_path=os.path.join(RESULTS_DIR, yt.channel_id, yt.video_id),
                     filename=f"{yt.video_id}.mp4"
                 )
             case _ :
                 yt.streams.filter(
                     res=resolutions[-1]
                 ).first().download(
-                    output_path=os.path.join(RESULTS_DIR, yt.video_id, yt.channel_id),
+                    output_path=os.path.join(RESULTS_DIR, yt.channel_id, yt.video_id),
                     filename=f"{yt.video_id}.mp4"
                 )
     except Exception as e:
