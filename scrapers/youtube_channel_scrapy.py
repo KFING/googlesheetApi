@@ -1,83 +1,67 @@
-from telethon.tl.types import MessageEntityTextUrl
-from glob import glob
-import datetime
 import os
-import logging  # стандартная библиотека для логирования
-from telethon import TelegramClient, events, sync, connection  # pip3 install telethon
-from telethon.tl.functions.channels import JoinChannelRequest
-from config import API_ID, API_HASH  # получение айди и хэша нашего приложения из файла config.py
+import logging
+import re
 import asyncio
-from telethon.errors.rpcerrorlist import FloodWaitError
+import time
+from instaloader import Instaloader, Post, Profile
+from datetime import datetime
+from typing import NamedTuple, Dict, Any, Set, List, Optional
+from feed_rec_info import FeedRecInfo
+from instaloader.exceptions import TwoFactorAuthRequiredException
+
+CWD = os.getcwd()
+RESULTS_DIR = os.path.join(CWD, 'data', 'instagram')
+
+py_logger = logging.getLogger(f"{__name__}")
+py_logger.setLevel(logging.INFO)
+py_handler = logging.FileHandler(f"{__name__}.log", mode='w')
+py_formatter = logging.Formatter("%(name)s %(asctime)s %(levelname)s %(message)s")
+py_handler.setFormatter(py_formatter)
+py_logger.addHandler(py_handler)
 
 
-# настройка логгера
-logging.basicConfig(
-    level=logging.INFO,
-    filename='parser_log.log',
-    filemode='w',
-    format="%(asctime)s %(levelname)s %(message)s"
-)
+py_logger.info("start")
+L = Instaloader()
+profile = Profile.from_username(L.context, username='egor_meschenko')
+for post in profile.get_posts():
+    print(datetime.now())
+    print(f'date: {post.date_utc}')
+    if post.date_utc >= datetime.strptime('2021-06-13 09:00:15' , "%Y-%m-%d %H:%M:%S") and post.date_utc < datetime.now():
+        print(post.date_utc)
 
 
-url = ["https://t.me/+HqfVmcDt3DVjYmUy",]
-flag = True
+
+#async def download_post(identificator, content_sections) → ObjectsBySection
 
 
-async def get_channel_id(client, link):  # получение ID канала
-    m = await client.get_messages(link, limit=1)
-    channel_id = m[0].peer_id.channel_id
-    return str(channel_id)
+#async def get_posts_list(source, channel, dt_from, dt_to | None):
 
 
-def clearify_text(msg):  # очищение текста от символов гиперссылки
-    text = msg.message
-    text_splitted = text.split()
-    text_listed = [word for word in text_splitted if word != ' ']
-    return " ".join(text_listed)
+#async def download_post(identificator, content_sections) →
 
+#ObjectsBySection
 
-def get_message_content(client, msg, url, channel_name, directory_name):  # получение содержимого сообщения
-    msg_date = str(msg.date)  # дата отправки сообщения
-    msg_url = url + '/' + str(msg.id)  # каст ссылки на сообщение
-    if msg.message:  # если сообщение содержит текст, запись этого текста в текстовый файл в папке сообщения
-        text = clearify_text(msg=msg)
-        print(f"{channel_name}/{directory_name}/{directory_name}")
-        print(text)
-    #    database.db_chats(name_chat=channel_name, text=text)
-    if msg.media:  # если сообщение содержит медиа (фото, видео, документы, файлы), загрузка медиа в папку сообщения
-        client.download_media(message=msg, file=f"{channel_name}/{directory_name}")
+#identificator
+#identificator={'source': 'instagram', 'id': 'https://www.instagram.com/b3r3zko?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=='}
+#- Source
+#- ID
+#of
+#post
 
+# content_section
+# content_section={'header':'true', 'description':'true', 'id':'true', 'header_image':'true', 'video_quality_best':'true', 'video_quality_medium':'true', 'video_quality_low':'true', 'audio_quality_best':'true', 'audio_quality_medium':'true', 'audio_quality_low':'true'}
 
-async def parse(client, url):  # сбор сообщений из канала
-    err = []  # переменная возможной ошибки
-    channel_id = await get_channel_id(client, url)  # получение ID канала
-    os.makedirs(channel_id, exist_ok=True)  # создание папки канала в текущей директории  # получение даты, с которой начинать парсинг
-    async for message in client.iter_messages(url, reverse=True):  # итератор по сообщениям (урл - ссылка
-                                                                                 # на канал, реверс - итерация от старых
-                                                                                 # к новым, офсет - дата с которой
-                                                                                 # начинать парсинг
-        try:
-            directory_name = str(message.id)  # получение ID сообщения
-            os.makedirs(f"{channel_id}/{directory_name}", exist_ok=True)  # создание папки сообщения
-            get_message_content(client, message, url, channel_id, directory_name)  # обработка сообщения
+#- header
+#- description
+#- id
+#- header_image
+#- video_quality_best
+#- video_quality_…
+#- audio_quality_best
 
-        except Exception as passing:  # обработка ошибок
-            err.append(passing)
-            continue
-    return err  # возврат возможных ошибок
+#List
+#of
+#Posts
 
-
-async def main():
-    async with TelegramClient('new', API_ID, API_HASH) as client:
-        for channel in url:
-            try:
-                await client(JoinChannelRequest(channel))
-                err = await parse(client, channel)  # обработка сообщений
-            except FloodWaitError as fwe:
-                print(f'Waiting for {fwe}')
-                await asyncio.sleep(delay=fwe.seconds)
-        await client.run_until_disconnected()
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+#async def get_posts_list(source, chan
+# nel, dt_from, dt_to |None)

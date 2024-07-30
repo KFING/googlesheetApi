@@ -46,7 +46,7 @@ def get_message_content(client, message, url:str, channel_id:str, message_id:str
         id_feed=message_id,
         id_channel=channel_id,
         description=clearify_text(message=message),
-        title=channel_id,
+        header=channel_id,
         url=f'{url}/{str(message.id)}',
         post_date=message.date,
         meta_info=None,

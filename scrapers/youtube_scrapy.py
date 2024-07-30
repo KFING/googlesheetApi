@@ -50,13 +50,21 @@ def get_description(yt: YouTube) -> str:
     return yt.description
 
 
-def get_title(yt: YouTube) -> str:
+def get_header(yt: YouTube) -> str:
     return yt.title
-
 
 
 def get_post_date(yt: YouTube) -> datetime:
     return yt.publish_date
+
+
+def download_audio(yt: YouTube, abr: str) -> str:
+    yt.streams.filter(
+        abr=abr
+    ).first().download(
+        output_path=os.path.join(RESULTS_DIR, yt.video_id, yt.channel_id),
+        filename=f"{yt.video_id}.mp3"
+    )
 
 
 def get_audio(yt: YouTube, abr: str) -> None:
@@ -68,28 +76,22 @@ def get_audio(yt: YouTube, abr: str) -> None:
         )
         match abr:
             case 'low':
-                yt.streams.filter(
-                    abr=abrs[0]
-                ).first().download(
-                    output_path=os.path.join(RESULTS_DIR, yt.video_id, yt.channel_id),
-                    filename=f"{yt.video_id}.mp3"
-                )
+                download_audio(yt, abrs[0])
             case 'medium':
-                yt.streams.filter(
-                    abr=abrs[len(abrs) // 2]
-                ).first().download(
-                    output_path=os.path.join(RESULTS_DIR, yt.video_id, yt.channel_id),
-                    filename=f"{yt.video_id}.mp3"
-                )
+                download_audio(yt, abrs[len(abrs) // 2])
             case _:
-                yt.streams.filter(
-                    abr=abrs[-1]
-                ).first().download(
-                    output_path=os.path.join(RESULTS_DIR, yt.video_id, yt.channel_id),
-                    filename=f"{yt.video_id}.mp3"
-                )
+                download_audio(yt, abrs[-1])
     except Exception as e:
         AudioError('wrong audio content', e)
+
+
+def download_video(yt: YouTube, res: str) -> None:
+    yt.streams.filter(
+        res=res
+    ).first().download(
+        output_path=os.path.join(RESULTS_DIR, yt.channel_id, yt.video_id),
+        filename=f"{yt.video_id}.mp4"
+    )
 
 
 def get_video(yt: YouTube, res: str) -> None:
@@ -101,31 +103,19 @@ def get_video(yt: YouTube, res: str) -> None:
         )
         match res:
             case 'low':
-                yt.streams.filter(
-                    res=resolutions[0]
-                ).first().download(
-                    output_path=os.path.join(RESULTS_DIR, yt.channel_id, yt.video_id),
-                    filename=f"{yt.video_id}.mp4"
-                )
+                download_video(yt, resolutions[0])
             case 'medium':
-                yt.streams.filter(
-                    res=resolutions[len(resolutions) // 2]
-                ).first().download(
-                    output_path=os.path.join(RESULTS_DIR, yt.channel_id, yt.video_id),
-                    filename=f"{yt.video_id}.mp4"
-                )
-            case _ :
-                yt.streams.filter(
-                    res=resolutions[-1]
-                ).first().download(
-                    output_path=os.path.join(RESULTS_DIR, yt.channel_id, yt.video_id),
-                    filename=f"{yt.video_id}.mp4"
-                )
+                download_video(yt, resolutions[len(resolutions) // 2])
+            case _:
+                download_video(yt, resolutions[-1])
     except Exception as e:
         VideoError('wrong video content', e)
 
 
-def get_meta_info(yt: YouTube) -> Optional[pytubefix.metadata.YouTubeMetadata]:
+def get_header_image(yt: YouTube):
+    channel = Channel(f'http://youtube.com/watch?v={yt.channel_id}')
+
+def get_meta_info(yt: YouTube):
     return yt.metadata
 
 
@@ -140,26 +130,59 @@ def get_timeline(yt: YouTube) -> List[pytubefix.Chapter]:
     return yt.chapters
 
 
-def youtube_scrapy_video(dct: Dict[str, Any], yt: YouTube) -> FeedRecInfo:
+def download_post(identificator: Dict[str, Any], dct_content_sections: Dict[str, bool]) -> FeedRecInfo:
     try:
         py_logger.info("start")
-        get_audio(yt=yt, abr=dct['abr'])
-        py_logger.info("audio success")
-        get_video(yt=yt, res=dct['res'])
-        py_logger.info("video success")
+        post = YouTube(f'http://youtube.com/watch?v={identificator['id']}')
+        feed_rec_info = {
+            'social_media_name': identificator['source'],
+            'id_feed': identificator['id'],
+            'id_channel': None,
+            'description': None,
+            'header': None,
+            'url': identificator['id'],
+            'post_date': None,
+            'meta_info': None,
+            'captions': None,
+            'timeline': None,
+            'audio_link': None,
+            'video_link': None,
+        }
+        if dct_content_sections['header']:
+            feed_rec_info['header'] = get_header(post)
+        if dct_content_sections['description']:
+            feed_rec_info['description'] = get_description(post)
+        if dct_content_sections['id']:
+            feed_rec_info['id_channel'] = post.channel_id
+        if dct_content_sections['header_image']:
+            get_header_image(L, post)
+        if dct_content_sections['video_quality_best']:
+            get_video(yt=post, res='best')
+        if dct_content_sections['video_quality_medium']:
+            get_video(yt=post, res='medium')
+        if dct_content_sections['video_quality_low']:
+            get_video(yt=post, res='low')
+        if dct_content_sections['audio_quality_best']:
+            get_audio(yt=post, abr='best')
+        if dct_content_sections['audio_quality_medium']:
+            get_audio(yt=post, abr='medium')
+        if dct_content_sections['audio_quality_low']:
+            get_audio(yt=post, abr='low')
+
+        py_logger.info("info success")
         return FeedRecInfo(
-            social_media_name='youtube',
-            id_feed=yt.video_id,
-            id_channel=yt.channel_id,
-            description=get_description(yt=yt),
-            title=get_title(yt=yt),
-            url=dct['url'],
-            post_date=get_post_date(yt=yt),
-            meta_info=get_meta_info(yt=yt),
-            captions=get_captions(yt=yt, lang=dct['lang']),
-            timeline=get_timeline(yt=yt),
-            audio_link=yt.video_id,
-            video_link=yt.video_id,
+            social_media_name=identificator['source'],
+            id_feed=feed_rec_info['id_feed'],
+            id_channel=feed_rec_info['id_channel'],
+            description=feed_rec_info['description'],
+            header=feed_rec_info['header'],
+            url=feed_rec_info['url'],
+            post_date=get_post_date(post),
+            video_link=feed_rec_info['id_feed'],
+            meta_info=None,
+            captions=None,
+            timeline=None,
+            audio_link=None,
         )
     except Exception as e:
         ContentError('wrong youtube content', e)
@@ -195,46 +218,31 @@ def youtube_scrapy_post(dct: Dict[str, Any], yt: YouTube) -> FeedRecInfo:
         ContentError('wrong youtube content', e)
 
 
-def youtube_scrapy_channel(dct: Dict[str, Any]) -> List[FeedRecInfo]:
+def youtube_scrapy_channel(source: Dict[str, Any], channel: str, dt_from: datetime = datetime.strptime('1900-06-13 09:00:15' , "%Y-%m-%d %H:%M:%S"), dt_to: datetime = datetime.now()) -> List[str]:
     try:
         py_logger.info("start")
-        c = Channel(dct['url'])
-        py_logger.info("getting links")
-        feed_rec_list: List[FeedRecInfo] = []
-        for video in c.videos:
-            py_logger.info(f"parsing video:{video}")
-            feed_rec_info = youtube_scrapy_video(dct=dct, yt=video)
-            feed_rec_list.append(feed_rec_info)
+        c = Channel(f'https://www.youtube.com/@Hohmemes/@{source['id']}')
+        py_logger.info("getting urls")
+        videos_urls = []
+        for post in c.videos:
+            if post.publish_date >= dt_from and post.publish_date < dt_to:
+                videos_urls.append(post.video_id)
             time.sleep(10)
-        return feed_rec_list
+        return videos_urls
     except Exception as e:
         ContentError('wrong youtube content', e)
 
 
-def youtube_scrapy_playlist(dct: Dict[str, Any]) -> List[FeedRecInfo]:
+def youtube_scrapy_playlist(source: Dict[str, Any], channel: str, dt_from: datetime = datetime.strptime('1900-06-13 09:00:15' , "%Y-%m-%d %H:%M:%S"), dt_to: datetime = datetime.now()) -> List[str]:
     try:
         py_logger.info("start")
-        p = Playlist(dct['url'])
-        py_logger.info("getting links")
-        feed_rec_list: List[FeedRecInfo] = []
-        for video in p.videos:
-            py_logger.info(f"parsing video:{video}")
-            feed_rec_info = youtube_scrapy_video(dct=dct, yt=video)
-            feed_rec_list.append(feed_rec_info)
+        p = Playlist(f'https://www.youtube.com/playlist?list={source['url']}')
+        py_logger.info("getting urls")
+        videos_urls = []
+        for post in p.videos:
+            if post.publish_date >= dt_from and post.publish_date < dt_to:
+                videos_urls.append(post.video_id)
             time.sleep(10)
-        return feed_rec_list
+        return videos_urls
     except Exception as e:
         ContentError('wrong youtube content', e)
-
-
-def main_youtube_scraper(dct: Dict[str, Any]) -> List[FeedRecInfo]:
-    if re.compile(r'(https?://)?(www\.)?(youtube\.com|youtu\.?be)/(@[^&=%\?]{1,})').match(dct['url']):
-        return youtube_scrapy_channel(dct=dct)
-    if re.compile(r'(https?://)?(www\.)?(youtube\.com|youtu\.?be)/playlist\?list=[^&=%\?]{1,}').match(dct['url']):
-        return youtube_scrapy_playlist(dct=dct)
-    if re.compile(r'(https?://)?(www\.)?(youtube\.com|youtu\.?be)/post/[^&=%\?]{1,}').match(dct['url']):
-        yt = YouTube(url=dct['url'])
-        return [youtube_scrapy_post(dct=dct, yt=yt)]
-    if re.compile(r'(https?://)?(www\.)?(youtube\.com|youtu\.?be)/watch\?v=[^&=%\?]{1,}').match(dct['url']):
-        yt = YouTube(url=dct['url'])
-        return [youtube_scrapy_video(dct=dct, yt=yt)]
