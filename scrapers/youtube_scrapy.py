@@ -218,7 +218,7 @@ def youtube_scrapy_post(dct: Dict[str, Any], yt: YouTube) -> FeedRecInfo:
         ContentError('wrong youtube content', e)
 
 
-def youtube_scrapy_channel(source: Dict[str, Any], channel: str, dt_from: datetime = datetime.strptime('1900-06-13 09:00:15' , "%Y-%m-%d %H:%M:%S"), dt_to: datetime = datetime.now()) -> List[str]:
+def get_posts_list_channel(source: Dict[str, Any], channel: str, dt_from: datetime = datetime.strptime('1900-06-13 09:00:15' , "%Y-%m-%d %H:%M:%S"), dt_to: datetime = datetime.now()) -> List[str]:
     try:
         py_logger.info("start")
         c = Channel(f'https://www.youtube.com/@Hohmemes/@{source['id']}')
@@ -233,7 +233,7 @@ def youtube_scrapy_channel(source: Dict[str, Any], channel: str, dt_from: dateti
         ContentError('wrong youtube content', e)
 
 
-def youtube_scrapy_playlist(source: Dict[str, Any], channel: str, dt_from: datetime = datetime.strptime('1900-06-13 09:00:15' , "%Y-%m-%d %H:%M:%S"), dt_to: datetime = datetime.now()) -> List[str]:
+def get_posts_list_playlist(source: Dict[str, Any], channel: str, dt_from: datetime = datetime.strptime('1900-06-13 09:00:15' , "%Y-%m-%d %H:%M:%S"), dt_to: datetime = datetime.now()) -> List[str]:
     try:
         py_logger.info("start")
         p = Playlist(f'https://www.youtube.com/playlist?list={source['url']}')

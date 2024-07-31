@@ -1,11 +1,12 @@
 import os
 import logging
 import time
+import datetime
 from typing import NamedTuple, Dict, Any, Set, List, Optional, Tuple
 from feed_rec_info import FeedRecInfo
 from telethon import TelegramClient
 from telethon.tl.functions.channels import JoinChannelRequest
-from config import API_ID, API_HASH  # получение айди и хэша нашего приложения из файла config.py
+from config import API_ID, API_HASH
 import asyncio
 from telethon.errors.rpcerrorlist import FloodWaitError
 
@@ -73,16 +74,20 @@ async def parse(client, url:str):
     return feed_rec_list
 
 
-async def main(dct: Dict[str, Any]) -> None:
+async def get_posts_list(source: Dict[str, Any], channel: str, dt_from: datetime = datetime.strptime('1900-06-13 09:00:15' , "%Y-%m-%d %H:%M:%S"), dt_to: datetime = datetime.now()) -> List[str]:
     async with TelegramClient('new', API_ID, API_HASH) as client:
         try:
-            await client(JoinChannelRequest(dct['url']))
-            feed_rec_list = await parse(client, dct['url'])
+            list_urls = []
+            err = []
+            await client(JoinChannelRequest(source['id']))
+            async for message in client.iter_messages(source['url'], reverse=True):
+                try:
+                    if message.date >= dt_from and message.date < dt_to:
+                        list_urls.append(message.url)
+                    time.sleep(10)
+                except Exception as passing:
+                    err.append(passing)
+                    continue
         except FloodWaitError as fwe:
             await asyncio.sleep(delay=fwe.seconds)
-    return feed_rec_list
-
-
-
-def main_telegram_scraper(dct: Dict[str, Any]) -> List[FeedRecInfo]:
-    return asyncio.run(main(dct))
+    return list_urls
